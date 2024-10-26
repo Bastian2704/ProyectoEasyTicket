@@ -11,7 +11,7 @@ namespace ProyectoEasyTicket.Models
         public string? ButacaSeccion { get; set; }
         public decimal? Precio { get; set; }
 
-        public string? Usuario { get; set; } 
+        public string? Telefono { get; set; } 
         public bool Vendido { get; set; }
 
     }
