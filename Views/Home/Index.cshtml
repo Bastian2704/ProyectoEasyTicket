@@ -1,8 +1,24 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio | EasyTicket";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">¡Bienvenido a EasyTicket!</h1>
+    <p class="lead">Compra y vende entradas para los mejores eventos deportivos, conciertos y más.</p>
+    <p>Explora nuestra <a href="@Url.Action("Index", "Tickets1")">colección de eventos disponibles</a> y asegura tu lugar.</p>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <h3>Encuentra tus eventos favoritos</h3>
+        <p>Descubre conciertos, eventos deportivos y espectáculos cerca de ti.</p>
+    </div>
+    <div class="col-md-4">
+        <h3>Compra con confianza</h3>
+        <p>En EasyTicket, garantizamos seguridad en cada transacción.</p>
+    </div>
+    <div class="col-md-4">
+        <h3>¿Tienes entradas? ¡Véndelas!</h3>
+        <p>Publica tus tickets y alcanza a millones de compradores en nuestra plataforma.</p>
+    </div>
 </div>
