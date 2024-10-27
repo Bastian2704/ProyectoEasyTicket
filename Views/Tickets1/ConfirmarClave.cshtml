@@ -1,0 +1,15 @@
+﻿
+@{
+    @model ProyectoEasyTicket.Models.Ticket
+
+    <h2>Confirmar Clave del Ticket</h2>
+
+    <form asp-action="ConfirmarClave" method="post">
+        <input type="hidden" asp-for="Contrasenia" />
+        <div class="form-group">
+            <label for="clave">Clave</label>
+            <input type="password" id="clave" name="clave" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Confirmar</button>
+    </form>
+}

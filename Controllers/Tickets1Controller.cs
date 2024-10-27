@@ -153,5 +153,40 @@ namespace ProyectoEasyTicket.Controllers
         {
             return _context.Ticket.Any(e => e.TicketID == id);
         }
+        public IActionResult ConfirmarClave(int id)
+        {
+            var ticket = _context.Ticket.Find(id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            return View();
+        }
+
+
+        // POST: Confirmar Clave
+        [HttpPost]
+        public IActionResult ConfirmarClave(int id, string contra, string action)
+        {
+            var ticket = _context.Ticket.Find(id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            // Verifica la clave del ticket
+            if (ticket.Contrasenia == contra)
+            {
+
+                return View(Delete);
+
+            }
+
+            // Clave incorrecta, muestra error
+            ModelState.AddModelError(string.Empty, "Clave incorrecta.");
+            return View(ticket);
+        }
+
+
     }
 }
