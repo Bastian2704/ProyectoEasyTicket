@@ -43,7 +43,7 @@ namespace ProyectoEasyTicket.Controllers
             return View(ticket);
         }
 
-        // GET: Tickets1/Create
+   
         public IActionResult Create()
         {
             return View();
