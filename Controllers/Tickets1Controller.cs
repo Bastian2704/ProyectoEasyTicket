@@ -36,6 +36,7 @@ namespace ProyectoEasyTicket.Controllers
                 return NotFound();
             }
 
+
             var ticket = await _context.Ticket
                 .FirstOrDefaultAsync(m => m.TicketID == id);
             if (ticket == null)
@@ -177,7 +178,7 @@ namespace ProyectoEasyTicket.Controllers
 
         // POST: Confirmar Clave
         [HttpPost]
-        public IActionResult ConfirmarClave(int id, string contra, string action)
+        public async Task<IActionResult> ConfirmarClave(int id, string clave)
         {
             var ticket = _context.Ticket.Find(id);
             if (ticket == null)
@@ -186,15 +187,56 @@ namespace ProyectoEasyTicket.Controllers
             }
 
             // Verifica la clave del ticket
-            if (ticket.Contrasenia == contra)
+            if (ticket.Contrasenia == clave)
             {
 
-                return View();
+                var ticketParaEditar = await _context.Ticket.FindAsync(id);
+                return View("Edit", ticketParaEditar);
 
             }
 
             // Clave incorrecta, muestra error
-            ModelState.AddModelError(string.Empty, "Clave incorrecta.");
+            ModelState.AddModelError("", "La clave ingresada es incorrecta. Por favor, intente nuevamente.");
+            return View(ticket);
+        }
+        public async Task<IActionResult> ConfirmarClave2(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var ticket = await _context.Ticket
+                .FirstOrDefaultAsync(m => m.TicketID == id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            return View(ticket);
+        }
+
+
+        // POST: Confirmar Clave
+        [HttpPost]
+        public async Task<IActionResult> ConfirmarClave2(int id, string clave)
+        {
+            var ticket = await _context.Ticket.FindAsync(id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            // Verifica la clave del ticket
+            if (ticket.Contrasenia == clave)
+            {
+                TempData["ClaveValidada"] = true;
+                return RedirectToAction("Delete", new { id });
+
+            }
+
+            // Clave incorrecta, muestra error
+            ModelState.AddModelError("", "La clave ingresada es incorrecta. Por favor, intente nuevamente.");
             return View(ticket);
         }
         public async Task<IActionResult> Comprar(int? id)

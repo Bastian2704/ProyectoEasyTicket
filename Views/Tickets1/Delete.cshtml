@@ -5,7 +5,15 @@
 }
 
 <h1>Delete</h1>
-
+@if (TempData["ClaveValidada"] == null)
+{
+    <div class="alert alert-danger">
+        No se ha verificado la clave. Por favor, vuelva a intentarlo.
+    </div>
+    <a asp-action="ConfirmarClave2" asp-route-id="@Model.TicketID" class="btn btn-secondary">Volver a Confirmar Clave</a>
+}
+else
+{
 <h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>Ticket</h4>
@@ -60,10 +68,11 @@
             @Html.DisplayFor(model => model.Contrasenia)
         </dd>
     </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="TicketID" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="TicketID" />
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a asp-action="Index">Back to List</a>
+        </form>
+    </div>
+}

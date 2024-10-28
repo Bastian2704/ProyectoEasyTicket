@@ -52,33 +52,31 @@
 <div class="row">
     <div class="col-md-4">
 
-        <div class="row">
-            <div class="col-md-4">
+        @if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorMessage"]
+            </div>
+        }
 
-                @if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
-                {
-                    <div class="alert alert-danger">
-                        @TempData["ErrorMessage"]
-                    </div>
-                }
+        @if (ViewData.ModelState.ErrorCount > 0)
+        {
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                </ul>
+            </div>
+        }
 
-                @if (ViewData.ModelState.ErrorCount > 0)
-                {
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-                            {
-                                <li>@error.ErrorMessage</li>
-                            }
-                        </ul>
-                    </div>
-                }
-
-                <form asp-action="ConfirmarClave" method="post">
-                    <div class="form-group">
-                        <label for="clave">Ingrese la clave del ticket</label>
-                        <input type="password" id="clave" name="clave" class="form-control" />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Confirmar</button>
-                    <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
-                </form>
+        <form asp-action="ConfirmarClave2" method="post">
+            <div class="form-group">
+                <label for="clave">Ingrese la clave del ticket</label>
+                <input type="password" id="clave" name="clave" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Confirmar</button>
+            <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
+        </form>
+    </div>
