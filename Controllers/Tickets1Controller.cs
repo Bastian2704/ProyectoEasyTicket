@@ -187,15 +187,14 @@ namespace ProyectoEasyTicket.Controllers
                 return NotFound("Ticket no encontrado.");
             }
 
-            // Validar la contraseña
+           
             if (ticket.Contrasenia == contra)
             {
-                // Aquí puedes redirigir al usuario a la página de edición o eliminación
                 return RedirectToAction("Edit", new { id = ticketId });
             }
             else
             {
-                // Si la contraseña es incorrecta
+               
                 ModelState.AddModelError(string.Empty, "La contraseña es incorrecta.");
                 return View(); 
             }
@@ -224,7 +223,7 @@ namespace ProyectoEasyTicket.Controllers
         [HttpPost]
         public IActionResult Comprar(int ticketID)
         {
-            var ticket = _context.Ticket.Find(id); 
+            var ticket = _context.Ticket.Find(ticketID); 
             if (ticket == null)
             {
                 return NotFound(); 
