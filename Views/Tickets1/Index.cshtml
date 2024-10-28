@@ -39,11 +39,11 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-    if (item.Vendido.Equals(false))
+
+            if (item.Vendido.Equals(false))
             {
-                
-            
-        <tr>
+
+                <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Evento)
             </td>
@@ -65,7 +65,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Vendido)
             </td>
-            
+                
             <td>
                     <a asp-action="Comprar" asp-route-id="@item.TicketID">Comprar</a> |
                     <a asp-action="ConfirmarClave" asp-route-id="@item.TicketID">Edit</a> |
@@ -74,6 +74,45 @@
             </td>
         </tr>
             }
-}
+        }
+
+            @foreach (var item1 in Model)
+            {
+
+
+            if (item1.Vendido.Equals(true))
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item1.Evento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item1.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item1.Lugar)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item1.ButacaSeccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item1.Precio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item1.Telefono)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item1.Vendido)
+                    </td>
+
+                    <td>
+                  
+                        
+                        <a asp-action="Details" asp-route-id="@item1.TicketID">Detalles</a> 
+                    </td>
+                </tr>
+            }
+            }   
     </tbody>
 </table>
