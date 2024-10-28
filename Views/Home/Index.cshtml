@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<ProyectoEasyTicket.Models.Ticket>
+
+@{
     ViewData["Title"] = "Inicio | EasyTicket";
 }
 
@@ -23,37 +25,65 @@
     </div>
 </div>
 
-<div class="event-box">
-    <h4>Concierto</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Evento</th>
+            <th>Fecha</th>
+            <th>Lugar</th>
+            <th>Butaca o Sección</th>
+            <th>Precio</th>
+            <th>Teléfono</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
 
-    <p><strong></strong></p>
-    <p>Disfruta de una noche de perreo inolvidable</p>
-    <a href="#" class="button">Ver Detalles</a>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="event-box">
-            <h4>Concierto</h4>
-            <p><strong>Concierto de Waldoking El Troyano</strong></p>
-            <p>Disfruta de una noche de perreo inolvidable</p>
-            <a href="#" class="button">Ver Detalles</a>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="event-box">
-            <h4>Pártido de fútbol</h4>
-            <p><strong>Ecuador contra Colombia</strong></p>
-            <p>Disfruta de una tarde de fútbol</p>
-            <a href="#" class="button">Ver Detalles</a>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="event-box">
-            <h4>Concierto</h4>
-            <p><strong>Concierto de Shakira</strong></p>
-            <p>Disfruta de una noche espectacular</p>
-            <a href="#" class="button">Ver Detalles</a>
-        </div>
-    </div>
-</div>
+
+        @{
+            int contador = 0; 
+        }
+
+        @foreach (var item in Model)
+        {
+            if (contador >= 3)
+            {
+                break; 
+            }
+            
+            if (item.Vendido == false)
+            {
+                contador++;
+                <tr>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.Evento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lugar)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ButacaSeccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vendido)
+                </td>
+
+            </tr>
+            }
+            
+        }
+    <tbody>
+</table>
+
+
+
 

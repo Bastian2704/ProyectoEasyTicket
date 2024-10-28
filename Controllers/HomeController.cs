@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProyectoEasyTicket.Data;
 using ProyectoEasyTicket.Models;
 using System.Diagnostics;
 
@@ -6,16 +8,20 @@ namespace ProyectoEasyTicket.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ProyectoEasyTicketContext _context;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ProyectoEasyTicketContext context, ILogger<HomeController> logger)
         {
+            _context = context;
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
+     
+                 return View(await _context.Ticket.ToListAsync());
         }
 
         public IActionResult Privacy()
@@ -28,5 +34,6 @@ namespace ProyectoEasyTicket.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }
