@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "ConfirmaciónVenta";
+}
+
+<h1>Confirmación de Compra</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<p>Gracias por su compra. Recibirá un correo electrónico de confirmación en breve.</p>
+
+<div>
+    <a asp-action="Index">Volver a la lista de eventos</a>
+</div>
+

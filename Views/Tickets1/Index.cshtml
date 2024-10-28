@@ -39,6 +39,10 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
+    if (item.Vendido.Equals(false))
+            {
+                
+            
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Evento)
@@ -69,6 +73,7 @@
                     <a asp-action="ConfirmarClave" asp-route-id="@item.TicketID">Delete</a>
             </td>
         </tr>
+            }
 }
     </tbody>
 </table>

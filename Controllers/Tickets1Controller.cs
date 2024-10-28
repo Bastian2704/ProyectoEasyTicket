@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -206,33 +207,34 @@ namespace ProyectoEasyTicket.Controllers
         }
 
         [HttpPost]
-        public IActionResult Comprar(Ticket ticket)
+        public IActionResult Comprar(int ticketID)
         {
-             if (ModelState.IsValid)
-            {
-                // Lógica para marcar el ticket como vendido
-                ticket.Vendido = true;
+            Debug.WriteLine("El botón de comprar fue presionado.");
 
-                // Guardar el ticket en la base de datos (asegúrate de tener el contexto)
+            var ticket = _context.Ticket.Find(ticketID);
+
+            if (ticket == null)
+            {
+                return NotFound(); 
+            }
+            ticket.Vendido = true;
+
+
                 _context.Update(ticket);
                 _context.SaveChanges();
 
-                // Redirigir a la vista de confirmación con la contraseña
-                return RedirectToAction("ConfirmarCompra", new { id = ticket.TicketID });
-            }
+              
 
-            return View(ticket); // Retorna la vista con el modelo si hay errores
+                TempData["SuccessMessage"] = "¡Venta exitosa! Gracias por su compra.";
+
+                return RedirectToAction("ConfirmacionVenta");
+
+        
         }
 
-        public IActionResult ConfirmarCompra(int id)
+        public IActionResult ConfirmacionVenta()
         {
-            var ticket = _context.Ticket.Find(id); // O usa cualquier lógica para obtener el ticket
-            if (ticket == null)
-            {
-                return NotFound();
-            }
-
-            return View(ticket);
+            return View();
         }
 
 
