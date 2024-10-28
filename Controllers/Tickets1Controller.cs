@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +35,7 @@ namespace ProyectoEasyTicket.Controllers
             {
                 return NotFound();
             }
+
 
             var ticket = await _context.Ticket
                 .FirstOrDefaultAsync(m => m.TicketID == id);
@@ -199,10 +201,13 @@ namespace ProyectoEasyTicket.Controllers
             }
         }
 
+
+        // POST: Confirmar Clave
         [HttpPost]
-        public IActionResult Comprar(Ticket ticket)
+        public async Task<IActionResult> ConfirmarClave2(int id, string clave)
         {
-             if (ModelState.IsValid)
+            var ticket = await _context.Ticket.FindAsync(id);
+            if (ticket == null)
             {
                 ticket.Vendido = true;
 
@@ -216,15 +221,32 @@ namespace ProyectoEasyTicket.Controllers
             return View(ticket); 
         }
 
-        public IActionResult ConfirmarCompra(int id)
+        [HttpPost]
+        public IActionResult Comprar(int ticketID)
         {
             var ticket = _context.Ticket.Find(id); 
             if (ticket == null)
             {
-                return NotFound();
+                return NotFound(); 
             }
+            ticket.Vendido = true;
 
-            return View(ticket);
+
+                _context.Update(ticket);
+                _context.SaveChanges();
+
+              
+
+                TempData["SuccessMessage"] = "¡Venta exitosa! Gracias por su compra.";
+
+                return RedirectToAction("ConfirmacionVenta");
+
+        
+        }
+
+        public IActionResult ConfirmacionVenta()
+        {
+            return View();
         }
 
 
