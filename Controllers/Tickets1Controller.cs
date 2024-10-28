@@ -45,7 +45,7 @@ namespace ProyectoEasyTicket.Controllers
             return View(ticket);
         }
 
-   
+
         public IActionResult Create()
         {
             return View();
@@ -175,42 +175,28 @@ namespace ProyectoEasyTicket.Controllers
 
 
         // POST: Confirmar Clave
+
         [HttpPost]
-        public IActionResult ConfirmarClave(int id, string contra, string action)
+        public IActionResult ConfirmarClave(int ticketId, string contra)
         {
-            var ticket = _context.Ticket.Find(id);
+            var ticket = _context.Ticket.FirstOrDefault(t => t.TicketID == ticketId);
             if (ticket == null)
             {
-                return NotFound();
+                return NotFound("Ticket no encontrado.");
             }
 
-            // Verifica la clave del ticket
+            // Validar la contraseña
             if (ticket.Contrasenia == contra)
             {
-
-                return View();
-
+                // Aquí puedes redirigir al usuario a la página de edición o eliminación
+                return RedirectToAction("Edit", new { id = ticketId });
             }
-
-            // Clave incorrecta, muestra error
-            ModelState.AddModelError(string.Empty, "Clave incorrecta.");
-            return View(ticket);
-        }
-        public async Task<IActionResult> Comprar(int? id)
-        {
-            if (id == null)
+            else
             {
-                return NotFound();
+                // Si la contraseña es incorrecta
+                ModelState.AddModelError(string.Empty, "La contraseña es incorrecta.");
+                return View(); 
             }
-
-            var ticket = await _context.Ticket
-                .FirstOrDefaultAsync(m => m.TicketID == id);
-            if (ticket == null)
-            {
-                return NotFound();
-            }
-
-            return View(ticket);
         }
 
         [HttpPost]
@@ -218,23 +204,21 @@ namespace ProyectoEasyTicket.Controllers
         {
              if (ModelState.IsValid)
             {
-                // Lógica para marcar el ticket como vendido
                 ticket.Vendido = true;
 
-                // Guardar el ticket en la base de datos (asegúrate de tener el contexto)
                 _context.Update(ticket);
                 _context.SaveChanges();
 
-                // Redirigir a la vista de confirmación con la contraseña
+               
                 return RedirectToAction("ConfirmarCompra", new { id = ticket.TicketID });
             }
 
-            return View(ticket); // Retorna la vista con el modelo si hay errores
+            return View(ticket); 
         }
 
         public IActionResult ConfirmarCompra(int id)
         {
-            var ticket = _context.Ticket.Find(id); // O usa cualquier lógica para obtener el ticket
+            var ticket = _context.Ticket.Find(id); 
             if (ticket == null)
             {
                 return NotFound();
