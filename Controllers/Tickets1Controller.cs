@@ -156,14 +156,22 @@ namespace ProyectoEasyTicket.Controllers
         {
             return _context.Ticket.Any(e => e.TicketID == id);
         }
-        public IActionResult ConfirmarClave(int id)
+
+        public async Task<IActionResult> ConfirmarClave(int? id)
         {
-            var ticket = _context.Ticket.Find(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var ticket = await _context.Ticket
+                .FirstOrDefaultAsync(m => m.TicketID == id);
             if (ticket == null)
             {
                 return NotFound();
             }
-            return View();
+
+            return View(ticket);
         }
 
 
@@ -181,7 +189,7 @@ namespace ProyectoEasyTicket.Controllers
             if (ticket.Contrasenia == contra)
             {
 
-                return View(Delete);
+                return View();
 
             }
 
