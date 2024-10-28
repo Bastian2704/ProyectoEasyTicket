@@ -25,6 +25,8 @@ namespace ProyectoEasyTicket.Controllers
             return View(await _context.Ticket.ToListAsync());
         }
 
+
+
         // GET: Tickets1/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -186,6 +188,53 @@ namespace ProyectoEasyTicket.Controllers
             ModelState.AddModelError(string.Empty, "Clave incorrecta.");
             return View(ticket);
         }
+        public async Task<IActionResult> Comprar(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var ticket = await _context.Ticket
+                .FirstOrDefaultAsync(m => m.TicketID == id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            return View(ticket);
+        }
+
+        [HttpPost]
+        public IActionResult Comprar(Ticket ticket)
+        {
+             if (ModelState.IsValid)
+            {
+                // Lógica para marcar el ticket como vendido
+                ticket.Vendido = true;
+
+                // Guardar el ticket en la base de datos (asegúrate de tener el contexto)
+                _context.Update(ticket);
+                _context.SaveChanges();
+
+                // Redirigir a la vista de confirmación con la contraseña
+                return RedirectToAction("ConfirmarCompra", new { id = ticket.TicketID });
+            }
+
+            return View(ticket); // Retorna la vista con el modelo si hay errores
+        }
+
+        public IActionResult ConfirmarCompra(int id)
+        {
+            var ticket = _context.Ticket.Find(id); // O usa cualquier lógica para obtener el ticket
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            return View(ticket);
+        }
+
 
 
     }
