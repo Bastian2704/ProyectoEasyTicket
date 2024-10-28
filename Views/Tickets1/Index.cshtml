@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.Lugar)
             </th>
             <th>
-               Butaca o Sección
+                Butaca o Sección
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Precio)
@@ -33,51 +33,52 @@
             <th>
                 @Html.DisplayNameFor(model => model.Vendido)
             </th>
-          
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
 
             if (item.Vendido.Equals(false))
             {
 
                 <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Evento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lugar)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ButacaSeccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vendido)
-            </td>
-                
-            <td>
-                    <a asp-action="Comprar" asp-route-id="@item.TicketID">Comprar</a> |
-                    <a asp-action="ConfirmarClave" asp-route-id="@item.TicketID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TicketID">Detalles</a> |
-                    <a asp-action="ConfirmarClave2" asp-route-id="@item.TicketID">Delete</a>
-            </td>
-        </tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Evento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Lugar)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ButacaSeccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefono)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vendido)
+                    </td>
+
+                    <td>
+                        <a asp-action="Comprar" asp-route-id="@item.TicketID">Comprar</a> |
+                        <a asp-action="ConfirmarClave" asp-route-id="@item.TicketID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.TicketID">Detalles</a> |
+                        <a asp-action="ConfirmarClave2" asp-route-id="@item.TicketID">Delete</a>
+                    </td>
+                </tr>
             }
         }
 
-            @foreach (var item1 in Model)
-            {
+        @foreach (var item1 in Model)
+        {
 
 
             if (item1.Vendido.Equals(true))
@@ -107,13 +108,13 @@
                     </td>
 
                     <td>
-                  
-                        
-                        <a asp-action="Details" asp-route-id="@item1.TicketID">Detalles</a> 
+
+
+                        <a asp-action="Details" asp-route-id="@item1.TicketID">Detalles</a>
                     </td>
                 </tr>
             }
-            }   
+        }
     </tbody>
 </table>
 

@@ -177,27 +177,43 @@ namespace ProyectoEasyTicket.Controllers
 
 
         // POST: Confirmar Clave
-
         [HttpPost]
-        public IActionResult ConfirmarClave(int ticketId, string contra)
+        public async Task<IActionResult> ConfirmarClave(int id, string clave)
         {
-            var ticket = _context.Ticket.FirstOrDefault(t => t.TicketID == ticketId);
+            var ticket = _context.Ticket.Find(id);
             if (ticket == null)
             {
-                return NotFound("Ticket no encontrado.");
+                return NotFound();
             }
 
-           
-            if (ticket.Contrasenia == contra)
+            // Verifica la clave del ticket
+            if (ticket.Contrasenia == clave)
             {
-                return RedirectToAction("Edit", new { id = ticketId });
+
+                var ticketParaEditar = await _context.Ticket.FindAsync(id);
+                return View("Edit", ticketParaEditar);
+
             }
-            else
+
+            // Clave incorrecta, muestra error
+            ModelState.AddModelError("", "La clave ingresada es incorrecta. Por favor, intente nuevamente.");
+            return View(ticket);
+        }
+        public async Task<IActionResult> ConfirmarClave2(int? id)
+        {
+            if (id == null)
             {
-               
-                ModelState.AddModelError(string.Empty, "La contraseña es incorrecta.");
-                return View(); 
+                return NotFound();
             }
+
+            var ticket = await _context.Ticket
+                .FirstOrDefaultAsync(m => m.TicketID == id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            return View(ticket);
         }
 
 
@@ -208,39 +224,62 @@ namespace ProyectoEasyTicket.Controllers
             var ticket = await _context.Ticket.FindAsync(id);
             if (ticket == null)
             {
-                ticket.Vendido = true;
-
-                _context.Update(ticket);
-                _context.SaveChanges();
-
-               
-                return RedirectToAction("ConfirmarCompra", new { id = ticket.TicketID });
+                return NotFound();
             }
 
-            return View(ticket); 
+            // Verifica la clave del ticket
+            if (ticket.Contrasenia == clave)
+            {
+                TempData["ClaveValidada"] = true;
+                return RedirectToAction("Delete", new { id });
+
+            }
+
+            // Clave incorrecta, muestra error
+            ModelState.AddModelError("", "La clave ingresada es incorrecta. Por favor, intente nuevamente.");
+            return View(ticket);
+        }
+        public async Task<IActionResult> Comprar(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var ticket = await _context.Ticket
+                .FirstOrDefaultAsync(m => m.TicketID == id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            return View(ticket);
         }
 
         [HttpPost]
         public IActionResult Comprar(int ticketID)
         {
-            var ticket = _context.Ticket.Find(ticketID); 
+            Debug.WriteLine("El botón de comprar fue presionado.");
+
+            var ticket = _context.Ticket.Find(ticketID);
+
             if (ticket == null)
             {
-                return NotFound(); 
+                return NotFound();
             }
             ticket.Vendido = true;
 
 
-                _context.Update(ticket);
-                _context.SaveChanges();
+            _context.Update(ticket);
+            _context.SaveChanges();
 
-              
 
-                TempData["SuccessMessage"] = "¡Venta exitosa! Gracias por su compra.";
 
-                return RedirectToAction("ConfirmacionVenta");
+            TempData["SuccessMessage"] = "¡Venta exitosa! Gracias por su compra.";
 
-        
+            return RedirectToAction("ConfirmacionVenta");
+
+
         }
 
         public IActionResult ConfirmacionVenta()
