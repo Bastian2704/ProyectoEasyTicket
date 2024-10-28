@@ -1,0 +1,106 @@
+﻿@model ProyectoEasyTicket.Models.Ticket
+
+@{
+    ViewData["Title"] = "Comprar";
+}
+
+<h1>Comprar</h1>
+
+<div>
+    <h4>Ticket</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Evento)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Evento)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Lugar)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Lugar)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ButacaSeccion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ButacaSeccion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+    </dl>
+</div>
+
+<!-- Añadir tarjeta -->
+<form asp-action="Comprar" method="post">
+    <input type="hidden" asp-for="TicketID" />
+
+    <h4>Información de Pago</h4>
+
+    <div class="form-group">
+        <label for="NomTitular">Titular de la Tarjeta</label>
+        <input type="text" name="NomTitular" class="form-control" required pattern="[A-Za-z\s]+" title="Solo se permiten letras" />
+    </div>
+
+    <div class="form-group">
+        <label for="NumTarjeta">Número de Tarjeta</label>
+        <input type="text" name="NumTarjeta" class="form-control" required pattern="\d{16}" title="El número de tarjeta debe tener 16 dígitos" />
+    </div>
+
+    <div class="form-group">
+        <label for="ExpMes">Mes de Expiración</label>
+        <select name="ExpMes" class="form-control" required>
+            <option value="">Seleccione un mes</option>
+            @for (int i = 1; i <= 12; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="ExpAnio">Año de Expiración</label>
+        <select name="ExpAnio" class="form-control" required>
+            <option value="">Seleccione un año</option>
+            @for (int i = DateTime.Now.Year; i <= DateTime.Now.Year + 10; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="CodSeguridad">Código de Seguridad</label>
+        <input type="text" name="CodSeguridad" class="form-control" required pattern="\d{3}" title="El código de seguridad debe tener 3 dígitos" />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Comprar" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+
