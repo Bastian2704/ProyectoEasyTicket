@@ -90,7 +90,7 @@ namespace ProyectoEasyTicket.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TicketID,Evento,Fecha,Lugar,ButacaSeccion,Precio,Telefono,Vendido,Contrasenia")] Ticket ticket)
+        public async Task<IActionResult> Edit(int? id, [Bind("TicketID,Evento,Fecha,Lugar,ButacaSeccion,Precio,Telefono,Vendido,Contrasenia")] Ticket ticket)
         {
             if (id != ticket.TicketID)
             {
@@ -115,10 +115,13 @@ namespace ProyectoEasyTicket.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction("Index", "Tickets1");
             }
+
             return View(ticket);
         }
+
 
         // GET: Tickets1/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -199,7 +202,7 @@ namespace ProyectoEasyTicket.Controllers
             ModelState.AddModelError("", "La clave ingresada es incorrecta. Por favor, intente nuevamente.");
             return View(ticket);
         }
-        public async Task<IActionResult> ConfirmarClave2(int? id)
+        public async Task<IActionResult> ConfirmarClave2(int? id)   
         {
             if (id == null)
             {

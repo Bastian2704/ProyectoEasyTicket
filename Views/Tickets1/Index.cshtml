@@ -1,120 +1,69 @@
 ﻿@model IEnumerable<ProyectoEasyTicket.Models.Ticket>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Venta de Ticket";
 }
 
-<h1>Venta de Ticket</h1>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-primary">Venta de Ticket</h1>
+        <a asp-action="Create" class="btn btn-success shadow-sm">+ Crear Nuevo</a>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Evento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Lugar)
-            </th>
-            <th>
-                Butaca o Sección
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Precio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vendido)
-            </th>
-
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-
-            if (item.Vendido.Equals(false))
+    <table class="table table-striped table-hover shadow-sm bg-white">
+        <thead class="table-primary">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Evento)</th>
+                <th>@Html.DisplayNameFor(model => model.Fecha)</th>
+                <th>@Html.DisplayNameFor(model => model.Lugar)</th>
+                <th>Butaca o Sección</th>
+                <th>@Html.DisplayNameFor(model => model.Precio)</th>
+                <th>@Html.DisplayNameFor(model => model.Telefono)</th>
+                <th>@Html.DisplayNameFor(model => model.Vendido)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
             {
-
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Evento)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Fecha)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Lugar)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ButacaSeccion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Precio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Telefono)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Vendido)
-                    </td>
-
-                    <td>
-                        <a asp-action="Comprar" asp-route-id="@item.TicketID">Comprar</a> |
-                        <a asp-action="ConfirmarClave" asp-route-id="@item.TicketID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.TicketID">Detalles</a> |
-                        <a asp-action="ConfirmarClave2" asp-route-id="@item.TicketID">Delete</a>
-                    </td>
-                </tr>
+                if (item.Vendido == false)
+                {
+                    <tr class="table-warning">
+                        <td>@Html.DisplayFor(modelItem => item.Evento)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Fecha)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Lugar)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ButacaSeccion)</td>
+                        <td>$@Html.DisplayFor(modelItem => item.Precio)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
+                        <td><span class="badge bg-warning text-dark">Disponible</span></td>
+                        <td>
+                            <a asp-action="Comprar" asp-route-id="@item.TicketID" class="btn btn-primary btn-sm">Comprar</a>
+                            <a asp-action="ConfirmarClave" asp-route-id="@item.TicketID" class="btn btn-warning btn-sm">Editar</a>
+                            <a asp-action="Details" asp-route-id="@item.TicketID" class="btn btn-info btn-sm">Detalles</a>
+                            <a asp-action="ConfirmarClave2" asp-route-id="@item.TicketID" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                }
             }
-        }
 
-        @foreach (var item1 in Model)
-        {
-
-
-            if (item1.Vendido.Equals(true))
+            @foreach (var item1 in Model)
             {
-
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item1.Evento)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item1.Fecha)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item1.Lugar)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item1.ButacaSeccion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item1.Precio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item1.Telefono)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item1.Vendido)
-                    </td>
-
-                    <td>
-
-
-                        <a asp-action="Details" asp-route-id="@item1.TicketID">Detalles</a>
-                    </td>
-                </tr>
+                if (item1.Vendido == true)
+                {
+                    <tr class="table-success">
+                        <td>@Html.DisplayFor(modelItem => item1.Evento)</td>
+                        <td>@Html.DisplayFor(modelItem => item1.Fecha)</td>
+                        <td>@Html.DisplayFor(modelItem => item1.Lugar)</td>
+                        <td>@Html.DisplayFor(modelItem => item1.ButacaSeccion)</td>
+                        <td>$@Html.DisplayFor(modelItem => item1.Precio)</td>
+                        <td>@Html.DisplayFor(modelItem => item1.Telefono)</td>
+                        <td><span class="badge bg-success">Vendido</span></td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item1.TicketID" class="btn btn-info btn-sm">Detalles</a>
+                        </td>
+                    </tr>
+                }
             }
-        }
-    </tbody>
-</table>
-
+        </tbody>
+    </table>
+</div>

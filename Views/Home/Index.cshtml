@@ -4,86 +4,86 @@
     ViewData["Title"] = "Inicio | EasyTicket";
 }
 
-<div class="text-center">
-    <h1 class="display-4">¡Bienvenido a EasyTicket!</h1>
-    <p class="lead">Compra y vende entradas para los mejores eventos deportivos, conciertos y más.</p>
-    <p>Explora nuestra <a href="@Url.Action("Index", "Tickets1")">colección de eventos disponibles</a> y asegura tu lugar.</p>
-</div>
-
-<div class="row mt-4">
-    <div class="col-md-4">
-        <h3>Encuentra tus eventos favoritos</h3>
-        <p>Descubre conciertos, eventos deportivos y espectáculos cerca de ti.</p>
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-4 fw-bold text-primary">¡Bienvenido a EasyTicket!</h1>
+        <p class="lead text-muted">Compra y vende entradas para los mejores eventos deportivos, conciertos y más.</p>
+        <p>Explora nuestra <a href="@Url.Action("Index", "Tickets1")" class="text-decoration-none text-primary fw-bold">colección de eventos disponibles</a> y asegura tu lugar.</p>
     </div>
-    <div class="col-md-4">
-        <h3>Compra con confianza</h3>
-        <p>En EasyTicket, garantizamos seguridad en cada transacción.</p>
+
+    <div class="row mt-5 text-center">
+        <div class="col-md-4">
+            <div class="p-3 shadow-sm rounded bg-white">
+                <h3 class="text-secondary">Encuentra tus eventos favoritos</h3>
+                <p class="text-muted">Descubre conciertos, eventos deportivos y espectáculos cerca de ti.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 shadow-sm rounded bg-white">
+                <h3 class="text-secondary">Compra con confianza</h3>
+                <p class="text-muted">En EasyTicket, garantizamos seguridad en cada transacción.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 shadow-sm rounded bg-white">
+                <h3 class="text-secondary">¿Tienes entradas? ¡Véndelas!</h3>
+                <p class="text-muted">Publica tus tickets y alcanza a millones de compradores en nuestra plataforma.</p>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h3>¿Tienes entradas? ¡Véndelas!</h3>
-        <p>Publica tus tickets y alcanza a millones de compradores en nuestra plataforma.</p>
-    </div>
-</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Evento</th>
-            <th>Fecha</th>
-            <th>Lugar</th>
-            <th>Butaca o Sección</th>
-            <th>Precio</th>
-            <th>Teléfono</th>
-            <th>Estado</th>
-        </tr>
-    </thead>
-    <tbody>
-
-
-        @{
-            int contador = 0; 
-        }
-
-        @foreach (var item in Model)
-        {
-            if (contador >= 3)
-            {
-                break; 
-            }
-            
-            if (item.Vendido == false)
-            {
-                contador++;
+    <div class="mt-5">
+        <h2 class="text-secondary mb-4">Tickets Disponibles</h2>
+        <table class="table table-hover align-middle shadow-sm bg-white">
+            <thead class="table-primary">
                 <tr>
-                    <td>
-                    @Html.DisplayFor(modelItem => item.Evento)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fecha)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Lugar)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ButacaSeccion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Precio)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefono)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vendido)
-                </td>
+                    <th>Evento</th>
+                    <th>Fecha</th>
+                    <th>Lugar</th>
+                    <th>Butaca o Sección</th>
+                    <th>Precio</th>
+                    <th>Teléfono</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int contador = 0;
+                }
 
-            </tr>
-            }
-            
-        }
-    <tbody>
-</table>
+                @foreach (var item in Model)
+                {
+                    if (contador >= 3)
+                    {
+                        break;
+                    }
 
-
+                    if (item.Vendido == false)
+                    {
+                        contador++;
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Evento)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Fecha)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Lugar)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ButacaSeccion)</td>
+                            <td>$@Html.DisplayFor(modelItem => item.Precio)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
+                            <td>
+                                @if (item.Vendido)
+                                {
+                                    <span class="badge bg-success">Vendido</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning">Disponible</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
