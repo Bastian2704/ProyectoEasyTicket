@@ -16,6 +16,7 @@ namespace ProyectoEasyTicket.Models
         public string? Telefono { get; set; } 
         public bool Vendido { get; set; }
         public string? Contrasenia { get; set; }
-        //a
+        
+        public List<Reviews>? Reviewss {  get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProyectoEasyTicket.Data;
 
@@ -11,9 +12,11 @@ using ProyectoEasyTicket.Data;
 namespace ProyectoEasyTicket.Migrations
 {
     [DbContext(typeof(ProyectoEasyTicketContext))]
-    partial class ProyectoEasyTicketContextModelSnapshot : ModelSnapshot
+    [Migration("20241206170047_tres")]
+    partial class tres
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -15,5 +15,6 @@ namespace ProyectoEasyTicket.Data
         }
 
         public DbSet<ProyectoEasyTicket.Models.Ticket> Ticket { get; set; } = default!;
+        public DbSet<ProyectoEasyTicket.Models.Reviews> Reviews { get; set; } = default!;
     }
 }

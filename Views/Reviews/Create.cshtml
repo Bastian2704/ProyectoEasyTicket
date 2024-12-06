@@ -1,0 +1,50 @@
+﻿@model ProyectoEasyTicket.Models.Reviews
+
+@{
+    ViewData["Title"] = "Crear Reseña";
+}
+
+<div class="container mt-5">
+    <h1 class="text-primary mb-4">Crear una Reseña</h1>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Comentario" class="form-label">Comentario</label>
+                    <input asp-for="Comentario" class="form-control" placeholder="Escribe tu comentario aquí" />
+                    <span asp-validation-for="Comentario" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Calificacion" class="form-label">Calificación</label>
+                    <input asp-for="Calificacion" class="form-control" placeholder="Ingresa una calificación (ej.1 - 10)" />
+                    <span asp-validation-for="Calificacion" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Fecha" class="form-label">Fecha</label>
+                    <input asp-for="Fecha" class="form-control" placeholder="dd/mm/aaaa" />
+                    <span asp-validation-for="Fecha" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TicketID" class="form-label">Evento</label>
+                    <select asp-for="TicketID" class="form-control" asp-items="ViewBag.TicketID"></select>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-action="Index" class="btn btn-secondary">Regresar a la Lista</a>
+                    <button type="submit" class="btn btn-primary">Guardar Reseña</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
