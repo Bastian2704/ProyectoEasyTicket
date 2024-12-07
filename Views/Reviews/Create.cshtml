@@ -19,13 +19,13 @@
 
                 <div class="mb-3">
                     <label asp-for="Calificacion" class="form-label">Calificación</label>
-                    <input asp-for="Calificacion" class="form-control" placeholder="Ingresa una calificación (ej.1 - 10)" />
+                    <input asp-for="Calificacion" class="form-control" placeholder="Ingresa una calificación (ej.1 - 5)" />
                     <span asp-validation-for="Calificacion" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Fecha" class="form-label">Fecha</label>
-                    <input asp-for="Fecha" class="form-control" placeholder="dd/mm/aaaa" />
+                    <input asp-for="Fecha" class="form-control" readonly value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
                     <span asp-validation-for="Fecha" class="text-danger"></span>
                 </div>
 
